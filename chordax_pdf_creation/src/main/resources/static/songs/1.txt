@@ -1,0 +1,65 @@
+{
+	"title": "Jestem dzieckiem Twym",
+	"verses": [
+		{
+			"tones": [
+				{
+					"tone": "H",
+					"position": 60
+				},
+				{
+					"tone": "H",
+					"position": 165
+				}
+			],
+			"lyrics": "Ty przynosisz mi zwycięstwa pieśń,"
+		},
+		{
+			"tones": [
+				{
+					"tone": "D",
+					"position": 30
+				},
+				{
+					"tone": "E",
+					"position": 70
+				},
+				{
+					"tone": "H",
+					"position": 150
+				}
+			],
+			"lyrics": "Ty dotykasz słowem swym,"
+		},
+		{
+			"tones": [
+				{
+					"tone": "H",
+					"position": 45
+				},
+				{
+					"tone": "H",
+					"position": 155
+				}
+			],
+			"lyrics": "Dajesz wolność mi z sideł wokół mnie"
+		},
+		{
+			"tones": [
+				{
+					"tone": "B",
+					"position": 30
+				},
+				{
+					"tone": "E",
+					"position": 60
+				},
+				{
+					"tone": "H",
+					"position": 90
+				}
+			],
+			"lyrics": "Więc znika każdy lęk."
+		}
+	]
+}

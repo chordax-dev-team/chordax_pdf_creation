@@ -1,0 +1,137 @@
+{
+	"title": "Duchu Święty",
+	"verses": [
+		{
+			"tones": [
+				{
+					"tone": "D",
+					"position": 0
+				},
+				{
+					"tone": "A",
+					"position": 315
+				}
+			],
+			"lyrics": "Nie ma nic ważniejszego, kiedy jesteś tu blisko"
+		},
+		{
+			"tones": [
+				{
+					"tone": "D",
+					"position": 315
+				}
+			],
+			"lyrics": "Z Tobą nic się nie równa, jesteś żywą nadzieją"
+		},
+		{
+			"tones": [
+				{
+					"tone": "A",
+					"position": 80
+				}
+			],
+			"lyrics": "Obecność Twa"
+		},
+		{
+			"tones": [
+				{
+					"tone": "D",
+					"position": 0
+				},
+				{
+					"tone": "A",
+					"position": 300
+				}
+			],
+			"lyrics": "Spróbowałem i pragnę najsłodszej miłości"
+		},
+		{
+			"tones": [
+				{
+					"tone": "D",
+					"position": 280
+				}
+			],
+			"lyrics": "Moje serce jest wolne od wstydu i hańby"
+		},
+		{
+			"tones": [
+				{
+					"tone": "A",
+					"position": 80
+				}
+			],
+			"lyrics": "Obecność Twa"
+		},
+		{
+			"tones": [
+				{
+					"tone": "D",
+					"position": 0
+				}
+			],
+			"lyrics": "Duchu Święty, zapraszamy Cię"
+		},
+		{
+			"tones": [
+				{
+					"tone": "A",
+					"position": 15
+				}
+			],
+			"lyrics": "Obecność Twa, jak fala, zmienia miejsce te"
+		},
+		{
+			"tones": [
+				{
+					"tone": "D",
+					"position": 60
+				}
+			],
+			"lyrics": "Twoja chwała niech przenika serce me"
+		},
+		{
+			"tones": [
+				{
+					"tone": "A",
+					"position": 80
+				},
+				{
+					"tone": "Em",
+					"position": 120
+				},
+				{
+					"tone": "D",
+					"position": 280
+				},
+				{
+					"tone": "A",
+					"position": 300
+				}
+			],
+			"lyrics": "Przejmij, Panie, wszystko, obecności chcemy Twej"
+		},
+		{
+			"tones": [
+				{
+					"tone": "D",
+					"position": 0
+				}
+			],
+			"lyrics": "Spraw, byśmy byli bardziej świadomi Twej obecności"
+		},
+		{
+			"tones": [
+				{
+					"tone": "A",
+					"position": 0
+				},
+				{
+					"tone": "Em",
+					"position": 220
+				}
+			],
+			"lyrics": "Daj nam doświadczyć dobroci Twojej chwały"
+		}
+	]
+}
