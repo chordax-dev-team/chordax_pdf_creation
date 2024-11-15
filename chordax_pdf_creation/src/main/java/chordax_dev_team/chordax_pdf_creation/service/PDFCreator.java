@@ -82,7 +82,9 @@ public class PDFCreator {
 			final int MARGIN_TOP = 25;
 			final int MARGIN_BOTTOM = 25;
 			int fontSize = 18;
-			BaseFont bf = BaseFont.createFont("src/main/resources/static/fonts/Roboto-Black.ttf", BaseFont.WINANSI,
+			
+			// 'IDENTITY_H' as type of fonts is to support glyphs (in different languages)
+			BaseFont bf = BaseFont.createFont("src/main/resources/static/fonts/Roboto-Black.ttf", BaseFont.IDENTITY_H,
 					BaseFont.EMBEDDED);
 			cb.beginText();
 			cb.setFontAndSize(bf, fontSize);
@@ -114,9 +116,9 @@ public class PDFCreator {
 				System.out.println(v.getLyrics() + "\n");
 			}
 
-			// setting numerical value of the barcode
+			// signature "chordax"
 			fontSize = 13;
-			BaseFont bfb = BaseFont.createFont("src/main/resources/static/fonts/Roboto-Bold.ttf", BaseFont.WINANSI,
+			BaseFont bfb = BaseFont.createFont("src/main/resources/static/fonts/Roboto-Bold.ttf", BaseFont.IDENTITY_H,
 					BaseFont.EMBEDDED);
 			cb.beginText();
 			cb.setFontAndSize(bfb, fontSize);
