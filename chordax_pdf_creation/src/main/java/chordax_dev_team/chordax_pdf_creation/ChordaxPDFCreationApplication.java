@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ChordaxPdfCreationApplication {
+public class ChordaxPDFCreationApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ChordaxPdfCreationApplication.class, args);
+		SpringApplication.run(ChordaxPDFCreationApplication.class, args);
 	}
 
 }

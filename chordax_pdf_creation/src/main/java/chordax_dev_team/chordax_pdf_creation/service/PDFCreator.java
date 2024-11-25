@@ -32,8 +32,6 @@ public class PDFCreator {
 
 	public File createPdf() throws IOException, DocumentException, InterruptedException {
 
-		System.out.println(this.song.getTitle());
-
 		File file = new File(this.FILE_PATH);
 
 		if (!file.exists()) {
@@ -54,28 +52,6 @@ public class PDFCreator {
 
 			PdfContentByte cb = pdfWriter.getDirectContent();
 			cb.saveState();
-
-//			cb.setColorFill(new CMYKColor(0f, 0f, 0f, 1f));
-//
-//			// adding bars combinations
-//			BarCombinationGen barsCombGen = new BarCombinationGen(this.CODE_VALUE, this.CODE_TYPE);
-//			
-//			// setting constant values of bars
-//			final List<Bar> BARS_COMB = barsCombGen.getBarsCombination();
-//			final float BAR_HEIGHT = barsCombGen.getCodeHeight() * UNIT_CONVERTER;
-//			final float MODULE = barsCombGen.getModule() * UNIT_CONVERTER;
-//			final float BAR_COORD_Y = (PAGE_HEIGHT - barsCombGen.getCodeHeight()) * UNIT_CONVERTER / 2 - 20;
-//			
-//			// setting variables values of bars
-//			float bar_coors_x = (PAGE_WIDTH - barsCombGen.getCodeWidth()) * UNIT_CONVERTER / 2;
-//			float barWidth;
-//			for (Bar b : BARS_COMB) {
-//				barWidth = b.getWidth() * UNIT_CONVERTER;
-//				cb.rectangle(bar_coors_x, BAR_COORD_Y, barWidth, BAR_HEIGHT);
-//				bar_coors_x += (barWidth + MODULE);
-//			}
-//
-//			cb.fill();
 
 			// setting header of PDF
 			final int MARGIN_LEFT = 25;
@@ -104,7 +80,6 @@ public class PDFCreator {
 					cb.moveText((MARGIN_LEFT + t.getPosition() * UNIT_CONVERTER), versePositionY * UNIT_CONVERTER);
 					cb.showText(t.getTone());
 					cb.endText();
-					System.out.println(t.getTone() + "/" + t.getPosition());
 				}
 				cb.beginText();
 				cb.moveText(MARGIN_LEFT * UNIT_CONVERTER, (versePositionY - CHORDS_LINE_HEIGHT) * UNIT_CONVERTER);
@@ -112,8 +87,7 @@ public class PDFCreator {
 				cb.endText();
 
 				versePositionY -= LINE_HEIGHT;
-
-				System.out.println(v.getLyrics() + "\n");
+				
 			}
 
 			// signature "chordax"
@@ -127,7 +101,6 @@ public class PDFCreator {
 			cb.showText("Chordax");
 			cb.endText();
 
-			System.out.println(file);
 			cb.restoreState();
 
 			document.close();

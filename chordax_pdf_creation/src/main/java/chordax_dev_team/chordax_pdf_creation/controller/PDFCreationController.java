@@ -2,43 +2,30 @@ package chordax_dev_team.chordax_pdf_creation.controller;
 
 import java.io.IOException;
 
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itextpdf.text.DocumentException;
 
-import chordax_dev_team.chordax_pdf_creation.service.PDFFetcher;
+import chordax_dev_team.chordax_pdf_creation.service.PDFService;
 
 @RestController
+@RequestMapping("api/v1/pdfs")
 public class PDFCreationController {
 	
-	@GetMapping("/song/{songId}")
+	@Autowired
+	private PDFService pdfService;
+	
+	@GetMapping("/{songId}")
 	@CrossOrigin(origins="*")
-	public ResponseEntity<byte[]> display( @PathVariable Integer songId)
-			throws IOException, DocumentException, InterruptedException {
-		
-		    byte[] contents = PDFFetcher.getPDF(songId);
-
-		    HttpHeaders headers = new HttpHeaders();
-		    headers.setContentType(MediaType.APPLICATION_PDF);
+	public ResponseEntity<byte[]> getPDF( @PathVariable Integer songId)
+			throws IOException, DocumentException, InterruptedException {	
 		    
-		    // Here you have to set the actual filename of your pdf
-		    String filename = "Pharmacode_.pdf";
-//		    headers.set("content-disposition", filename);
-		    headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-		    ContentDisposition cd = ContentDisposition.parse(filename);
-		    headers.setContentDisposition(cd);
-		    ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
-			System.out.println(contents.length);
-		    return response;
-
+		return pdfService.getResponseWithPDF(songId);
 	}
-
 }

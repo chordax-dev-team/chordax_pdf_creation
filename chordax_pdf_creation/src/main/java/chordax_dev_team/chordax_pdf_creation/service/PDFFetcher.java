@@ -8,13 +8,13 @@ import java.nio.file.Paths;
 
 import com.itextpdf.text.DocumentException;
 
+import chordax_dev_team.chordax_pdf_creation.model.Song;
+
 public class PDFFetcher {
 	
-	public final static byte[] getPDF(int songId) throws IOException, DocumentException, InterruptedException{
+	public final static byte[] getPDF(Song song) throws IOException, DocumentException, InterruptedException{
 		
-		JsonParser jPar = new JsonParser(songId + ".txt");
-		
-		PDFCreator pdfCreated = new PDFCreator(jPar.convertToJson());
+		PDFCreator pdfCreated = new PDFCreator(song);
 		
 		File file = pdfCreated.createPdf();
 
@@ -23,7 +23,7 @@ public class PDFFetcher {
 		Path pdfPath = Paths.get(fileSource);
 		byte[] pdfData = Files.readAllBytes(pdfPath);
 			
-//		file.delete();
+		file.delete();
 		
 		return pdfData;
 		

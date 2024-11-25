@@ -20,16 +20,19 @@ public class JsonParser {
 	public Song convertToJson() {
 
 		Song songJson = null;
-		
-	// from stackoverflow.com/questions/11700482/convert-text-file-to-json-in-java
+
+		// from stackoverflow.com/questions/11700482/convert-text-file-to-json-in-java
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			File jsonInputFile = new File(FILE_PATH + fileName);
-			songJson = mapper.readValue(jsonInputFile, Song.class);			
+			songJson = mapper.readValue(jsonInputFile, Song.class);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return songJson;
+	}
+	
+	public String getFileName() {
+		return this.fileName;
 	}
 }
