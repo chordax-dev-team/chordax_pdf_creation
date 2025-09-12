@@ -10,7 +10,7 @@ import chordax_dev_team.chordax_pdf_creation.model.Song;
 
 public class PDFFetcher {
 
-	public static byte[] getPDF(Song song) throws IOException, DocumentException, InterruptedException {
+	public static byte[] getPDF(Song song) throws IOException, DocumentException {
 		PDFCreator pdfCreator = new PDFCreator(song);
 		File pdfFile = pdfCreator.createPdf();
 

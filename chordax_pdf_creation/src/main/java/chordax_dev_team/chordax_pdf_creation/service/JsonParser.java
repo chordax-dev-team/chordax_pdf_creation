@@ -20,16 +20,17 @@ public class JsonParser {
 			throw new IllegalArgumentException("Invalid file index: " + fileIndexInArray);
 		}
 		this.fileName = files[(int) fileIndexInArray];
+		System.out.println("fileName in JsonParser: " + this.fileName);
 	}
 
-	public Song convertToJson() {
+	public Song convertToObject() {
 		ObjectMapper mapper = new ObjectMapper();
-		File jsonInputFile = new File(FILE_PATH + fileName);
+		File jsonInputFile = new File(FILE_PATH + this.fileName);
 
 		try {
 			return mapper.readValue(jsonInputFile, Song.class);
 		} catch (IOException e) {
-			System.err.println("Failed to parse JSON file: " + fileName);
+			System.err.println("Failed to parse JSON file: " + this.fileName);
 			e.printStackTrace();
 			return null;
 		}

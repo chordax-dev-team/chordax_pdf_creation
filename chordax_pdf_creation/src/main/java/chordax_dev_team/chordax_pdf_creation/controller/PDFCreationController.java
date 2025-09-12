@@ -1,5 +1,6 @@
 package chordax_dev_team.chordax_pdf_creation.controller;
 
+import chordax_dev_team.chordax_pdf_creation.dto.PDFDto;
 import chordax_dev_team.chordax_pdf_creation.service.PDFService;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,25 +22,15 @@ public class PDFCreationController {
 	}
 
 	@GetMapping("/{songId}")
-	public ResponseEntity<byte[]> getPDF(@PathVariable("songId") Long songId) {
+	public ResponseEntity<PDFDto> getPDF(@PathVariable Long songId) {
 		try {
-			byte[] pdfData = pdfService.getPDF(songId);
 
-			if (pdfData == null || pdfData.length == 0) {
-				return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-			}
+			PDFDto pdfDto = pdfService.getPDF(songId);
+			return ResponseEntity.ok(pdfDto);
 
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_PDF);
-			headers.setContentDisposition(ContentDisposition.builder("inline")
-					.filename("song_" + songId + ".pdf")
-					.build());
-
-			return new ResponseEntity<>(pdfData, headers, HttpStatus.OK);
-
-		} catch (IOException | DocumentException | InterruptedException e) {
-			// Log the error if you have a logger
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		} catch (IOException | DocumentException | InterruptedException ex) {
+			// Ideally log the exception here
+			return ResponseEntity.status(HttpStatus.SEE_OTHER).build();
 		}
 	}
 }

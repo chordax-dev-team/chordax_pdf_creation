@@ -42,20 +42,36 @@
 <script>
     async function createPDF() {
       const songId = document.getElementById("songId").value;
+
       try {
         const response = await fetch(`http://localhost:8081/api/v1/pdfs/${songId}`);
         if (!response.ok) throw new Error("Failed to fetch PDF");
 
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
+        const pdfDto = await response.json(); // Expecting { title: "...", content: "base64string" }
 
+        if (!pdfDto.content || !pdfDto.title) {
+          throw new Error("Invalid PDF data received");
+        }
+
+        // Convert base64 to binary
+        const byteCharacters = atob(pdfDto.content);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: "application/pdf" });
+
+        // Create download link
+        const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `song_${songId}.pdf`;
+        a.download = `${pdfDto.title}.pdf`;
         document.body.appendChild(a);
         a.click();
         a.remove();
         window.URL.revokeObjectURL(url);
+
       } catch (error) {
         alert("Error generating PDF: " + error.message);
       }
