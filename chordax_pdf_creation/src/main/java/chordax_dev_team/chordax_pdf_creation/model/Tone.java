@@ -1,27 +1,13 @@
 package chordax_dev_team.chordax_pdf_creation.model;
 
+import lombok.Data;
+import lombok.Getter;
+
+@Getter
 public class Tone {
-	
-	String tone;
-	
-	int position;
 
-	public String getTone() {
-		return tone;
-	}
+	private String chord;
 
-	public void setTone(String tone) {
-		this.tone = tone;
-	}
-
-	public int getPosition() {
-		return position;
-	}
-
-	public void setPosition(int position) {
-		this.position = position;
-	}
-	
-	
+	private int position;
 
 }

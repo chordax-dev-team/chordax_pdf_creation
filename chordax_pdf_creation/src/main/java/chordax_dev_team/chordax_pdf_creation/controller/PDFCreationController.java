@@ -1,31 +1,45 @@
 package chordax_dev_team.chordax_pdf_creation.controller;
 
+import chordax_dev_team.chordax_pdf_creation.service.PDFService;
+import com.itextpdf.text.DocumentException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
+
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.itextpdf.text.DocumentException;
-
-import chordax_dev_team.chordax_pdf_creation.service.PDFService;
-
 @RestController
-@RequestMapping("api/v1/pdfs")
+@RequestMapping("/api/v1/pdfs")
+@CrossOrigin(origins = "*") // Consider restricting this in production
 public class PDFCreationController {
-	
+
+	private final PDFService pdfService;
+
 	@Autowired
-	private PDFService pdfService;
-	
+	public PDFCreationController(PDFService pdfService) {
+		this.pdfService = pdfService;
+	}
+
 	@GetMapping("/{songId}")
-	@CrossOrigin(origins="*")
-	public ResponseEntity<byte[]> getPDF( @PathVariable Integer songId)
-			throws IOException, DocumentException, InterruptedException {	
-		    
-		return pdfService.getResponseWithPDF(songId);
+	public ResponseEntity<byte[]> getPDF(@PathVariable("songId") Long songId) {
+		try {
+			byte[] pdfData = pdfService.getPDF(songId);
+
+			if (pdfData == null || pdfData.length == 0) {
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+			}
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_PDF);
+			headers.setContentDisposition(ContentDisposition.builder("inline")
+					.filename("song_" + songId + ".pdf")
+					.build());
+
+			return new ResponseEntity<>(pdfData, headers, HttpStatus.OK);
+
+		} catch (IOException | DocumentException | InterruptedException e) {
+			// Log the error if you have a logger
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 }

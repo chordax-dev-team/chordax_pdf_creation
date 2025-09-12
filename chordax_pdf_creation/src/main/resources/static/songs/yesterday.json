@@ -1,0 +1,61 @@
+{
+  "title": "Yesterday",
+  "composer": "Paul McCartney",
+  "author": "John Lennon & Paul McCartney",
+  "lines": [
+    {
+      "lineType": "VERSE",
+      "lyrics": "Yesterday, all my troubles seemed so far away",
+      "tones": [
+        { "chord": "F", "position": 0 },
+        { "chord": "Em7", "position": 60 },
+        { "chord": "A7", "position": 120 },
+        { "chord": "Dm", "position": 180 },
+        { "chord": "Bb", "position": 240 },
+        { "chord": "C7", "position": 300 }
+      ]
+    },
+    {
+      "lineType": "VERSE",
+      "lyrics": "Now it looks as though they're here to stay",
+      "tones": [
+        { "chord": "F", "position": 0 },
+        { "chord": "F/E", "position": 60 },
+        { "chord": "Dm", "position": 120 },
+        { "chord": "G7", "position": 180 },
+        { "chord": "Bb", "position": 240 }
+      ]
+    },
+    {
+      "lineType": "VERSE",
+      "lyrics": "Oh, I believe in yesterday",
+      "tones": [
+        { "chord": "F", "position": 0 }
+      ]
+    },
+    {
+      "lineType": "CHORUS",
+      "lyrics": "Why she had to go, I don't know, she wouldn't say",
+      "tones": [
+        { "chord": "Em7", "position": 0 },
+        { "chord": "A7", "position": 60 },
+        { "chord": "Dm", "position": 120 },
+        { "chord": "Bb", "position": 180 },
+        { "chord": "Gm", "position": 240 },
+        { "chord": "C", "position": 300 }
+      ]
+    },
+    {
+      "lineType": "CHORUS",
+      "lyrics": "I said something wrong, now I long for yesterday",
+      "tones": [
+        { "chord": "Em7", "position": 0 },
+        { "chord": "A7", "position": 60 },
+        { "chord": "Dm", "position": 120 },
+        { "chord": "Bb", "position": 180 },
+        { "chord": "Gm", "position": 240 },
+        { "chord": "C", "position": 300 }
+      ]
+    }
+  ]
+}

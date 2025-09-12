@@ -1,38 +1,37 @@
 package chordax_dev_team.chordax_pdf_creation.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import chordax_dev_team.chordax_pdf_creation.model.Song;
+import chordax_dev_team.chordax_pdf_creation.utils.FileUtils;
+import lombok.Getter;
+
 import java.io.File;
 import java.io.IOException;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import chordax_dev_team.chordax_pdf_creation.model.Song;
-
+@Getter
 public class JsonParser {
 
-	private String fileName;
+	private final String fileName;
+	private static final String FILE_PATH = "src/main/resources/static/songs/";
 
-	private final static String FILE_PATH = "src/main/resources/static/songs/";
-
-	public JsonParser(String fileName) {
-		this.fileName = fileName;
+	public JsonParser(long fileIndexInArray) {
+		String[] files = FileUtils.getFileNamesInFolder(FILE_PATH);
+		if (fileIndexInArray < 0 || fileIndexInArray >= files.length) {
+			throw new IllegalArgumentException("Invalid file index: " + fileIndexInArray);
+		}
+		this.fileName = files[(int) fileIndexInArray];
 	}
 
 	public Song convertToJson() {
-
-		Song songJson = null;
-
-		// from stackoverflow.com/questions/11700482/convert-text-file-to-json-in-java
 		ObjectMapper mapper = new ObjectMapper();
+		File jsonInputFile = new File(FILE_PATH + fileName);
+
 		try {
-			File jsonInputFile = new File(FILE_PATH + fileName);
-			songJson = mapper.readValue(jsonInputFile, Song.class);
+			return mapper.readValue(jsonInputFile, Song.class);
 		} catch (IOException e) {
+			System.err.println("Failed to parse JSON file: " + fileName);
 			e.printStackTrace();
+			return null;
 		}
-		return songJson;
-	}
-	
-	public String getFileName() {
-		return this.fileName;
 	}
 }

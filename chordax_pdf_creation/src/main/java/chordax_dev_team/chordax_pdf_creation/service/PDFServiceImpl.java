@@ -1,38 +1,23 @@
 package chordax_dev_team.chordax_pdf_creation.service;
 
-import java.io.IOException;
-
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import chordax_dev_team.chordax_pdf_creation.model.Song;
+import com.itextpdf.text.DocumentException;
 import org.springframework.stereotype.Service;
 
-import com.itextpdf.text.DocumentException;
+import java.io.IOException;
 
-//Annotation
 @Service
-//Class
-//Implementing PDFService interface
-public class PDFServiceImpl implements PDFService{
+public class PDFServiceImpl implements PDFService {
 
-	public ResponseEntity<byte[]> getResponseWithPDF(long songId) throws IOException, DocumentException, InterruptedException{
-		
-		JsonParser jPar = new JsonParser(songId + ".txt");
-		
-	    byte[] contents = PDFFetcher.getPDF(jPar.convertToJson());
+	@Override
+	public byte[] getPDF(long songId) throws IOException, DocumentException, InterruptedException {
+		JsonParser parser = new JsonParser(songId);
+		Song song = parser.convertToJson();
 
-	    HttpHeaders headers = new HttpHeaders();
-	    headers.setContentType(MediaType.APPLICATION_PDF);
-	    
-	    // Here you have to set the actual filename of your pdf
-	    String filename = jPar.getFileName();
-	    headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-	    ContentDisposition cd = ContentDisposition.parse(filename);
-	    headers.setContentDisposition(cd);
-	    ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
-		return response;
-		
+		if (song == null) {
+			throw new IOException("Failed to parse song JSON: " + parser.getFileName());
+		}
+
+		return PDFFetcher.getPDF(song);
 	}
 }

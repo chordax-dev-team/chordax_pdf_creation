@@ -1,0 +1,74 @@
+{
+  "title": "Wake Me Up",
+  "composer": "Avicii, Aloe Blacc, Mike Einziger",
+  "author": "Avicii, Aloe Blacc, Mike Einziger",
+  "lines": [
+    {
+      "lineType": "VERSE",
+      "lyrics": "Feeling my way through the darkness",
+      "tones": [
+        { "chord": "Bm", "position": 0 },
+        { "chord": "G", "position": 60 },
+        { "chord": "D", "position": 120 }
+      ]
+    },
+    {
+      "lineType": "VERSE",
+      "lyrics": "Guided by a beating heart",
+      "tones": [
+        { "chord": "Bm", "position": 0 },
+        { "chord": "G", "position": 60 },
+        { "chord": "D", "position": 120 }
+      ]
+    },
+    {
+      "lineType": "VERSE",
+      "lyrics": "I can't tell where the journey will end",
+      "tones": [
+        { "chord": "Bm", "position": 0 },
+        { "chord": "G", "position": 60 },
+        { "chord": "D", "position": 120 }
+      ]
+    },
+    {
+      "lineType": "CHORUS",
+      "lyrics": "So wake me up when it's all over",
+      "tones": [
+        { "chord": "Bm", "position": 0 },
+        { "chord": "G", "position": 60 },
+        { "chord": "D", "position": 120 },
+        { "chord": "A", "position": 180 }
+      ]
+    },
+    {
+      "lineType": "CHORUS",
+      "lyrics": "When I'm wiser and I'm older",
+      "tones": [
+        { "chord": "Bm", "position": 0 },
+        { "chord": "G", "position": 60 },
+        { "chord": "D", "position": 120 },
+        { "chord": "F#", "position": 180 }
+      ]
+    },
+    {
+      "lineType": "CHORUS",
+      "lyrics": "All this time I was finding myself",
+      "tones": [
+        { "chord": "Bm", "position": 0 },
+        { "chord": "G", "position": 60 },
+        { "chord": "D", "position": 120 },
+        { "chord": "A", "position": 180 }
+      ]
+    },
+    {
+      "lineType": "CHORUS",
+      "lyrics": "And I didn't know I was lost",
+      "tones": [
+        { "chord": "Bm", "position": 0 },
+        { "chord": "G", "position": 60 },
+        { "chord": "D", "position": 120 },
+        { "chord": "F#", "position": 180 }
+      ]
+    }
+  ]
+}

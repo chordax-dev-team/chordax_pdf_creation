@@ -1,0 +1,67 @@
+{
+  "title": "Bohemian Rhapsody",
+  "composer": "Freddie Mercury",
+  "author": "Freddie Mercury",
+  "lines": [
+    {
+      "lineType": "OPERATIC",
+      "lyrics": "I see a little silhouetto of a man",
+      "tones": [
+        { "chord": "B", "position": 0 },
+        { "chord": "F#", "position": 60 },
+        { "chord": "F", "position": 120 },
+        { "chord": "F#", "position": 180 }
+      ]
+    },
+    {
+      "lineType": "OPERATIC",
+      "lyrics": "Scaramouche, Scaramouche, will you do the Fandango?",
+      "tones": [
+        { "chord": "B", "position": 0 },
+        { "chord": "F#", "position": 60 },
+        { "chord": "F", "position": 120 },
+        { "chord": "F#", "position": 180 }
+      ]
+    },
+    {
+      "lineType": "OPERATIC",
+      "lyrics": "Thunderbolt and lightning, very very frightening me",
+      "tones": [
+        { "chord": "A#", "position": 0 },
+        { "chord": "F", "position": 60 },
+        { "chord": "C#", "position": 120 },
+        { "chord": "F#", "position": 180 }
+      ]
+    },
+    {
+      "lineType": "OPERATIC",
+      "lyrics": "Galileo, Galileo, Galileo, Figaro – Magnifico!",
+      "tones": [
+        { "chord": "G#", "position": 0 },
+        { "chord": "G", "position": 60 },
+        { "chord": "F#", "position": 120 },
+        { "chord": "G", "position": 180 }
+      ]
+    },
+    {
+      "lineType": "OPERATIC",
+      "lyrics": "I'm just a poor boy, nobody loves me",
+      "tones": [
+        { "chord": "F", "position": 0 },
+        { "chord": "C", "position": 60 },
+        { "chord": "Cdim", "position": 120 },
+        { "chord": "C", "position": 180 }
+      ]
+    },
+    {
+      "lineType": "OPERATIC",
+      "lyrics": "He's just a poor boy from a poor family",
+      "tones": [
+        { "chord": "F", "position": 0 },
+        { "chord": "C", "position": 60 },
+        { "chord": "Cdim", "position": 120 },
+        { "chord": "C", "position": 180 }
+      ]
+    }
+  ]
+}

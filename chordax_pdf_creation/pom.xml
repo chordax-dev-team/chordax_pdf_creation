@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.5</version>
+		<version>3.5.5</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>chordax-dev-team</groupId>
@@ -53,7 +53,11 @@
 			<artifactId>itextpdf</artifactId>
 			<version>5.5.13.3</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.itextpdf/io -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.itextpdf/io -->
 	</dependencies>
 
 	<build>

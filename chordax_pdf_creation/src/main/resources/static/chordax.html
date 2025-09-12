@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chordax PDF Generator</title>
+    <style>
+        body {
+          font-family: sans-serif;
+          padding: 2rem;
+          background: #f4f4f4;
+        }
+        .container {
+          background: white;
+          padding: 2rem;
+          border-radius: 8px;
+          max-width: 400px;
+          margin: auto;
+          box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        select, button {
+          width: 100%;
+          padding: 0.75rem;
+          margin-top: 1rem;
+          font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <img src="./img/chordax.png" width="300"/>
+    <h2>Create Song PDF</h2>
+    <label for="songId">Select Song ID:</label>
+    <select id="songId">
+        <option value="0">Song 0</option>
+        <option value="1">Song 1</option>
+        <option value="2">Song 2</option>
+        <!-- Add more options dynamically if needed -->
+    </select>
+    <button onclick="createPDF()">Create PDF</button>
+</div>
+
+<script>
+    async function createPDF() {
+      const songId = document.getElementById("songId").value;
+      try {
+        const response = await fetch(`http://localhost:8081/api/v1/pdfs/${songId}`);
+        if (!response.ok) throw new Error("Failed to fetch PDF");
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `song_${songId}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      } catch (error) {
+        alert("Error generating PDF: " + error.message);
+      }
+    }
+</script>
+</body>
+</html>

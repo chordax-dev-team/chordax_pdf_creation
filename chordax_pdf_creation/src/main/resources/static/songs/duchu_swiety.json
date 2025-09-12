@@ -1,0 +1,97 @@
+{
+  "title": "Duchu Święty",
+  "composer": "Szymon Czyżewski, Melania Król, Dawid Leszczyński",
+  "author": "Szymon Czyżewski, Melania Król, Dawid Leszczyński",
+  "lines": [
+    {
+      "lineType": "VERSE",
+      "lyrics": "Nie ma nic ważniejszego, kiedy jesteś tu blisko",
+      "tones": [
+        { "chord": "D", "position": 0 },
+        { "chord": "A", "position": 315 }
+      ]
+    },
+    {
+      "lineType": "VERSE",
+      "lyrics": "Z Tobą nic się nie równa, jesteś żywą nadzieją",
+      "tones": [
+        { "chord": "D", "position": 315 }
+      ]
+    },
+    {
+      "lineType": "REFRAIN",
+      "lyrics": "Obecność Twa",
+      "tones": [
+        { "chord": "A", "position": 80 }
+      ]
+    },
+    {
+      "lineType": "VERSE",
+      "lyrics": "Spróbowałem i pragnę najsłodszej miłości",
+      "tones": [
+        { "chord": "D", "position": 0 },
+        { "chord": "A", "position": 300 }
+      ]
+    },
+    {
+      "lineType": "VERSE",
+      "lyrics": "Moje serce jest wolne od wstydu i hańby",
+      "tones": [
+        { "chord": "D", "position": 280 }
+      ]
+    },
+    {
+      "lineType": "REFRAIN",
+      "lyrics": "Obecność Twa",
+      "tones": [
+        { "chord": "A", "position": 80 }
+      ]
+    },
+    {
+      "lineType": "CHORUS",
+      "lyrics": "Duchu Święty, zapraszamy Cię",
+      "tones": [
+        { "chord": "D", "position": 0 }
+      ]
+    },
+    {
+      "lineType": "CHORUS",
+      "lyrics": "Obecność Twa, jak fala, zmienia miejsce te",
+      "tones": [
+        { "chord": "A", "position": 15 }
+      ]
+    },
+    {
+      "lineType": "CHORUS",
+      "lyrics": "Twoja chwała niech przenika serce me",
+      "tones": [
+        { "chord": "D", "position": 60 }
+      ]
+    },
+    {
+      "lineType": "CHORUS",
+      "lyrics": "Przejmij, Panie, wszystko, obecności chcemy Twej",
+      "tones": [
+        { "chord": "A", "position": 80 },
+        { "chord": "Em", "position": 120 },
+        { "chord": "D", "position": 280 },
+        { "chord": "A", "position": 300 }
+      ]
+    },
+    {
+      "lineType": "BRIDGE",
+      "lyrics": "Spraw, byśmy byli bardziej świadomi Twej obecności",
+      "tones": [
+        { "chord": "D", "position": 0 }
+      ]
+    },
+    {
+      "lineType": "BRIDGE",
+      "lyrics": "Daj nam doświadczyć dobroci Twojej chwały",
+      "tones": [
+        { "chord": "A", "position": 0 },
+        { "chord": "Em", "position": 220 }
+      ]
+    }
+  ]
+}

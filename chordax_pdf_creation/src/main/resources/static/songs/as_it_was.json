@@ -1,0 +1,86 @@
+{
+  "title": "As It Was",
+  "composer": "Harry Styles, Kid Harpoon, Tyler Johnson",
+  "author": "Harry Styles, Kid Harpoon, Tyler Johnson",
+  "lines": [
+    {
+      "lineType": "INTRO",
+      "lyrics": "Come on Harry, we wanna say goodnight to you",
+      "tones": [
+        { "chord": "Am", "position": 0 },
+        { "chord": "D", "position": 60 },
+        { "chord": "G", "position": 120 }
+      ]
+    },
+    {
+      "lineType": "VERSE",
+      "lyrics": "Holdin' me back, gravity's holdin' me back",
+      "tones": [
+        { "chord": "C", "position": 0 },
+        { "chord": "Am", "position": 60 },
+        { "chord": "D", "position": 120 },
+        { "chord": "G", "position": 180 }
+      ]
+    },
+    {
+      "lineType": "VERSE",
+      "lyrics": "I want you to hold out the palm of your hand",
+      "tones": [
+        { "chord": "C", "position": 0 },
+        { "chord": "Am", "position": 60 },
+        { "chord": "D", "position": 120 },
+        { "chord": "G", "position": 180 }
+      ]
+    },
+    {
+      "lineType": "CHORUS",
+      "lyrics": "In this world, it's just us",
+      "tones": [
+        { "chord": "C", "position": 0 },
+        { "chord": "Am", "position": 60 },
+        { "chord": "D", "position": 120 },
+        { "chord": "G", "position": 180 }
+      ]
+    },
+    {
+      "lineType": "CHORUS",
+      "lyrics": "You know it's not the same as it was",
+      "tones": [
+        { "chord": "C", "position": 0 },
+        { "chord": "Am", "position": 60 },
+        { "chord": "D", "position": 120 },
+        { "chord": "G", "position": 180 }
+      ]
+    },
+    {
+      "lineType": "VERSE",
+      "lyrics": "Answer the phone, Harry you're no good alone",
+      "tones": [
+        { "chord": "C", "position": 0 },
+        { "chord": "Am", "position": 60 },
+        { "chord": "D", "position": 120 },
+        { "chord": "G", "position": 180 }
+      ]
+    },
+    {
+      "lineType": "BRIDGE",
+      "lyrics": "Go home, get ahead, light-speed internet",
+      "tones": [
+        { "chord": "C", "position": 0 },
+        { "chord": "Am", "position": 60 },
+        { "chord": "D", "position": 120 },
+        { "chord": "G", "position": 180 }
+      ]
+    },
+    {
+      "lineType": "OUTRO",
+      "lyrics": "As it was, as it was, you know it's not the same",
+      "tones": [
+        { "chord": "Am", "position": 0 },
+        { "chord": "D", "position": 60 },
+        { "chord": "G", "position": 120 },
+        { "chord": "C", "position": 180 }
+      ]
+    }
+  ]
+}

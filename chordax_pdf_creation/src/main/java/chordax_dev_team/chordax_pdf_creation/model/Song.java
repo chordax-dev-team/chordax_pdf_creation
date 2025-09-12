@@ -1,27 +1,19 @@
 package chordax_dev_team.chordax_pdf_creation.model;
 
+import lombok.Data;
+
+import java.util.List;
+
+@Data
 public class Song {
-	
+
 	private String title;
-	
-	private Verse[] verses;
 
-	public String getTitle() {
-		return title;
-	}
+	private String composer;
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+	private String author;
 
-	public Verse[] getVerses() {
-		return verses;
-	}
+	private long userId;
 
-	public void setVerses(Verse[] verses) {
-		this.verses = verses;
-	}
-	
-	
-
+	private List<Line> lines;
 }
