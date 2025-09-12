@@ -1,10 +1,20 @@
 package chordax_dev_team.chordax_pdf_creation.utils;
 
 import java.io.File;
+import java.util.Objects;
 
 public class FileUtils {
 
     public static String[] getFileNamesInFolder(String folderPath) {
+
+        return java.util.Arrays.stream(getFiles(folderPath))
+                .filter(File::isFile)
+                .map(File::getName)
+                .toArray(String[]::new);
+    }
+
+    private static File[] getFiles(String folderPath){
+
         File folder = new File(folderPath);
 
         if (!folder.exists() || !folder.isDirectory()) {
@@ -12,13 +22,7 @@ public class FileUtils {
         }
 
         File[] files = folder.listFiles();
-        if (files == null) {
-            return new String[0]; // Folder is empty or inaccessible
-        }
 
-        return java.util.Arrays.stream(files)
-                .filter(File::isFile)
-                .map(File::getName)
-                .toArray(String[]::new);
+        return Objects.requireNonNullElseGet(files, () -> new File[0]);
     }
 }

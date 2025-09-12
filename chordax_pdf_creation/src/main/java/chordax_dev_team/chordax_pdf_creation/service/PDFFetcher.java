@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import com.itextpdf.text.DocumentException;
 import chordax_dev_team.chordax_pdf_creation.model.Song;
 
