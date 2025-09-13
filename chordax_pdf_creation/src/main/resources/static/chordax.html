@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Chordax PDF Generator</title>
     <style>
         body {
@@ -13,55 +13,89 @@
           background: white;
           padding: 2rem;
           border-radius: 8px;
-          max-width: 400px;
+          max-width: 500px;
           margin: auto;
           box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        select, button {
+        .tabs {
+          display: flex;
+          margin-bottom: 1rem;
+        }
+        .tab {
+          flex: 1;
+          padding: 0.75rem;
+          text-align: center;
+          cursor: pointer;
+          background: #ddd;
+          border-radius: 8px 8px 0 0;
+        }
+        .tab.active {
+          background: white;
+          font-weight: bold;
+          border-bottom: 2px solid #f4f4f4;
+        }
+        .tab-content {
+          display: none;
+        }
+        .tab-content.active {
+          display: block;
+        }
+        select, button, textarea {
           width: 100%;
           padding: 0.75rem;
           margin-top: 1rem;
           font-size: 1rem;
+        }
+        textarea {
+          height: 150px;
+          resize: vertical;
         }
     </style>
 </head>
 <body>
 <div class="container">
     <img src="./img/chordax.png" width="200"/>
-    <h2>Create Song PDF</h2>
-    <label for="songId">Select Song ID:</label>
-    <select id="songId">
-        <!-- Add more options dynamically if needed -->
-    </select>
-    <button onclick="createPDF()">Create PDF</button>
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab('getSongs')">Get Songs</div>
+        <div class="tab" onclick="switchTab('postJson')">Post JSON</div>
+    </div>
+
+    <div id="getSongs" class="tab-content active">
+        <h2>Create Song PDF</h2>
+        <label for="songId">Select Song ID:</label>
+        <select id="songId"></select>
+        <button onclick="createPDF()">Create PDF</button>
+    </div>
+
+    <div id="postJson" class="tab-content">
+        <h2>Post JSON Payload</h2>
+        <label for="jsonInput">Enter JSON:</label>
+        <textarea id="jsonInput" placeholder='{"title":"My Song","data":"..."}'></textarea>
+        <button onclick="postJson()">Submit JSON</button>
+    </div>
 </div>
 
 <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      document.querySelector(`.tab[onclick*="${tabId}"]`).classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+
     async function createPDF() {
       const songId = document.getElementById("songId").value;
-
       try {
-        const response = await fetch(`http://localhost:8081/api/v1/pdfs/${songId}`);
+        const response = await fetch(`http://localhost:8081/api/v1/pdfs/1/${songId}`);
         if (!response.ok) throw new Error("Failed to fetch PDF");
+        const pdfDto = await response.json();
+        if (!pdfDto.data || !pdfDto.title) throw new Error("Invalid PDF data received");
 
-        const pdfDto = await response.json(); // Expecting { title: "...", content: "base64string" }
-        console.log(pdfDto);
-
-        if (!pdfDto.data || !pdfDto.title) {
-          throw new Error("Invalid PDF data received");
-        }
-
-
-        // Convert base64 to binary
         const byteCharacters = atob(pdfDto.data);
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-          byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
+        const byteNumbers = Array.from(byteCharacters, c => c.charCodeAt(0));
         const byteArray = new Uint8Array(byteNumbers);
         const blob = new Blob([byteArray], { type: "application/pdf" });
 
-        // Create download link
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
@@ -70,37 +104,62 @@
         a.click();
         a.remove();
         window.URL.revokeObjectURL(url);
-
       } catch (error) {
         alert("Error generating PDF: " + error.message);
       }
     }
 
-  async function fetchTitles() {
-    const songSelection = document.getElementById("songId");
+    async function fetchTitles() {
+      const songSelection = document.getElementById("songId");
+      try {
+        const response = await fetch("http://localhost:8081/api/v1/song-titles");
+        if (!response.ok) throw new Error("Problem with finding titles");
+        const titles = await response.json();
+        if (!Array.isArray(titles) || titles.length === 0) throw new Error("List of songs is empty");
 
-    try {
-      const response = await fetch("http://localhost:8081/api/v1/song-titles");
-      if (!response.ok) throw new Error("Problem with finding titles");
-
-      const titles = await response.json(); // Expecting an array of strings like ["As It Was", "Watermelon Sugar", ...]
-
-      if (!Array.isArray(titles) || titles.length === 0) {
-        throw new Error("List of songs is empty");
+        titles.forEach((title, index) => {
+          const option = document.createElement("option");
+          option.value = index;
+          option.textContent = title;
+          songSelection.appendChild(option);
+        });
+      } catch (error) {
+        console.error("Error loading song titles:", error.message);
       }
-
-      titles.forEach((title, index) => {
-        const option = document.createElement("option");
-        option.value = index; // or use a unique ID if available
-        option.textContent = title;
-        songSelection.appendChild(option);
-      });
-    } catch (error) {
-      console.error("Error loading song titles:", error.message);
     }
-  }
 
-   window.onload = fetchTitles;
+    async function postJson() {
+      const jsonInput = document.getElementById("jsonInput").value;
+      try {
+        const payload = JSON.parse(jsonInput);
+        const response = await fetch("http://localhost:8081/api/v1/pdfs/1", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+if (!response.ok) throw new Error("Failed to fetch PDF");
+        const pdfDto = await response.json();
+        if (!pdfDto.data || !pdfDto.title) throw new Error("Invalid PDF data received");
+
+        const byteCharacters = atob(pdfDto.data);
+        const byteNumbers = Array.from(byteCharacters, c => c.charCodeAt(0));
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: "application/pdf" });
+
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${pdfDto.title}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      } catch (error) {
+        alert("Error generating PDF: " + error.message);
+      }
+    }
+
+    window.onload = fetchTitles;
 </script>
 </body>
 </html>
