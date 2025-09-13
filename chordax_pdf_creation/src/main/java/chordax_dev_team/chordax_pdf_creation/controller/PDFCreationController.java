@@ -20,17 +20,9 @@ import java.util.List;
 @CrossOrigin(origins = "*") // Consider restricting this in production
 public class PDFCreationController {
 
-//	private final PDFService pdfService;
 
 	@Autowired
 	private DiscoveryClient discoveryClient;
-
-
-//	@Autowired
-//	public PDFCreationController(PDFService pdfService, DiscoveryClient discoveryClient) {
-//		this.pdfService = pdfService;
-//		this.discoveryClient = discoveryClient;
-//	}
 
 	@GetMapping("{userId}/{songId}")
 	public ResponseEntity<PDFDto> getPDF(@PathVariable("userId") Long userId, @PathVariable("songId") Long songId) throws DocumentException, IOException {
@@ -44,14 +36,15 @@ public class PDFCreationController {
 		Song song = restExchange.getBody();
 		String title = song.title();
 		byte[] data = PDFFetcher.getPDF(song);
-			return ResponseEntity.ok(new PDFDto(title,data));
 
+		return ResponseEntity.ok(new PDFDto(title,data));
 	}
 
 	@PostMapping("{userId}")
 	public ResponseEntity<PDFDto> getPDF(@PathVariable("userId") Long userId, @RequestBody Song song) throws DocumentException, IOException {
 		String title = song.title();
 		byte[] data = PDFFetcher.getPDF(song);
+
 		return ResponseEntity.ok(new PDFDto(title,data));
 	}
 }
