@@ -46,9 +46,15 @@
           margin-top: 1rem;
           font-size: 1rem;
         }
+        #textAreaWrapper{
+          width: 100%;
+          padding-right: 2rem;
+        }
         textarea {
+          width: calc(100% - 25px);
           height: 150px;
           resize: vertical;
+          font-size: .7rem;
         }
     </style>
 </head>
@@ -56,22 +62,147 @@
 <div class="container">
     <img src="./img/chordax.png" width="200"/>
     <div class="tabs">
-        <div class="tab active" onclick="switchTab('getSongs')">Get Songs</div>
-        <div class="tab" onclick="switchTab('postJson')">Post JSON</div>
+        <div class="tab active" onclick="switchTab('getSongs')">GET SONG</div>
+        <div class="tab" onclick="switchTab('postJson')">ENTER SONG</div>
     </div>
 
     <div id="getSongs" class="tab-content active">
-        <h2>Create Song PDF</h2>
-        <label for="songId">Select Song ID:</label>
+        <h2>CREATE SONG PDF</h2>
+        <label for="songId">SELECT SONG:</label>
         <select id="songId"></select>
-        <button onclick="createPDF()">Create PDF</button>
+        <button onclick="createPDF()">CREATE PDF</button>
     </div>
 
     <div id="postJson" class="tab-content">
-        <h2>Post JSON Payload</h2>
-        <label for="jsonInput">Enter JSON:</label>
-        <textarea id="jsonInput" placeholder='{"title":"My Song","data":"..."}'></textarea>
-        <button onclick="postJson()">Submit JSON</button>
+        <h2>CREATE SONG PDF</h2>
+        <label for="jsonInput">ENTER SONG AS JSON:</label>
+        <div id="textAreaWrapper">
+      <textarea id="jsonInput" placeholder='{"title":"My Song","data":"..."}' >{
+  "title": "Jestem dzieckiem Twym",
+  "composer": "Jonathan David Helser, Melissa Helser",
+  "author": "Bethel Music",
+  "lines": [
+    {
+      "lineType": "VERSE",
+      "lyrics": "Ty przynosisz mi zwycięstwa pieśń,",
+      "tones": [
+        { "chord": "D", "position": 0 },
+        { "chord": "H", "position": 60 }
+      ]
+    },
+    {
+      "lineType": "VERSE",
+      "lyrics": "Ty dotykasz słowem Swym.",
+      "tones": [
+        { "chord": "G", "position": 30 },
+        { "chord": "A", "position": 70 },
+        { "chord": "D", "position": 150 }
+      ]
+    },
+    {
+      "lineType": "VERSE",
+      "lyrics": "Dajesz wolność mi z sideł wokół mnie,",
+      "tones": [
+        { "chord": "D", "position": 45 },
+        { "chord": "H", "position": 155 }
+      ]
+    },
+    {
+      "lineType": "VERSE",
+      "lyrics": "Więc znika każdy lęk.",
+      "tones": [
+        { "chord": "B", "position": 30 },
+        { "chord": "E", "position": 60 },
+        { "chord": "H", "position": 90 }
+      ]
+    },
+    {
+      "lineType": "CHORUS",
+      "lyrics": "Wiem, nie muszę się więcej bać, bo jestem dzieckiem Twym.",
+      "tones": [
+        { "chord": "G", "position": 0 },
+        { "chord": "A", "position": 60 },
+        { "chord": "D", "position": 120 }
+      ]
+    },
+    {
+      "lineType": "VERSE",
+      "lyrics": "Ty wybrałeś mnie u początku dni,",
+      "tones": [
+        { "chord": "H", "position": 0 },
+        { "chord": "A", "position": 60 },
+        { "chord": "D", "position": 120 }
+      ]
+    },
+    {
+      "lineType": "VERSE",
+      "lyrics": "Wyszeptałeś imię me.",
+      "tones": [
+        { "chord": "H", "position": 0 },
+        { "chord": "A", "position": 60 },
+        { "chord": "D", "position": 120 }
+      ]
+    },
+    {
+      "lineType": "VERSE",
+      "lyrics": "Jestem dzieckiem Twym, pokochałeś mnie,",
+      "tones": [
+        { "chord": "H", "position": 0 },
+        { "chord": "A", "position": 60 },
+        { "chord": "D", "position": 120 }
+      ]
+    },
+    {
+      "lineType": "VERSE",
+      "lyrics": "Me życie w Twojej krwi.",
+      "tones": [
+        { "chord": "H", "position": 0 },
+        { "chord": "A", "position": 60 },
+        { "chord": "D", "position": 120 }
+      ]
+    },
+    {
+      "lineType": "BRIDGE",
+      "lyrics": "Idąc za Tobą mogę przejść przez morze,",
+      "tones": [
+        { "chord": "H", "position": 0 },
+        { "chord": "A", "position": 60 },
+        { "chord": "D", "position": 120 }
+      ]
+    },
+    {
+      "lineType": "BRIDGE",
+      "lyrics": "W miłości tonie cały strach.",
+      "tones": [
+        { "chord": "H", "position": 0 },
+        { "chord": "A", "position": 60 },
+        { "chord": "D", "position": 120 }
+      ]
+    },
+    {
+      "lineType": "BRIDGE",
+      "lyrics": "Wyzwalasz mnie i mogę wyznać, że",
+      "tones": [
+        { "chord": "H", "position": 0 },
+        { "chord": "A", "position": 60 },
+        { "chord": "D", "position": 120 }
+      ]
+    },
+    {
+      "lineType": "BRIDGE",
+      "lyrics": "Ja jestem dzieckiem Twym.",
+      "tones": [
+        { "chord": "H", "position": 0 },
+        { "chord": "A", "position": 60 },
+        { "chord": "D", "position": 120 },
+        { "chord": "G", "position": 180 }
+      ]
+    }
+  ]
+}
+</textarea>
+        </div>
+        <button onclick="postJson()">CREATE PDF</button>
     </div>
 </div>
 
@@ -112,15 +243,15 @@
     async function fetchTitles() {
       const songSelection = document.getElementById("songId");
       try {
-        const response = await fetch("http://localhost:8081/api/v1/song-titles");
+        const response = await fetch("http://localhost:8080/api/v1/titles/1");
         if (!response.ok) throw new Error("Problem with finding titles");
         const titles = await response.json();
         if (!Array.isArray(titles) || titles.length === 0) throw new Error("List of songs is empty");
 
         titles.forEach((title, index) => {
           const option = document.createElement("option");
-          option.value = index;
-          option.textContent = title;
+          option.value = title.songId;
+          option.textContent = title.songTitle;
           songSelection.appendChild(option);
         });
       } catch (error) {
