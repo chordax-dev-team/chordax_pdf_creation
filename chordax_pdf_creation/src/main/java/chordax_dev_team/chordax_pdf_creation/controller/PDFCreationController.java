@@ -2,8 +2,8 @@ package chordax_dev_team.chordax_pdf_creation.controller;
 
 import chordax_dev_team.chordax_pdf_creation.dto.PDFDto;
 import chordax_dev_team.chordax_pdf_creation.model.Song;
-import chordax_dev_team.chordax_pdf_creation.service.PDFFetcher;
 
+import chordax_dev_team.chordax_pdf_creation.service.PDFService;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
@@ -35,7 +35,7 @@ public class PDFCreationController {
 		ResponseEntity<Song> restExchange = restTemplate.exchange(serviceURI, HttpMethod.GET, null, Song.class);
 		Song song = restExchange.getBody();
 		String title = song.title();
-		byte[] data = PDFFetcher.getPDF(song);
+		byte[] data = new PDFService().getPDF(song);
 
 		return ResponseEntity.ok(new PDFDto(title,data));
 	}
@@ -43,7 +43,7 @@ public class PDFCreationController {
 	@PostMapping("{userId}")
 	public ResponseEntity<PDFDto> getPDF(@PathVariable("userId") Long userId, @RequestBody Song song) throws DocumentException, IOException {
 		String title = song.title();
-		byte[] data = PDFFetcher.getPDF(song);
+		byte[] data = new PDFService().getPDF(song);
 
 		return ResponseEntity.ok(new PDFDto(title,data));
 	}

@@ -1,4 +1,4 @@
-package chordax_dev_team.chordax_pdf_creation.service;
+package chordax_dev_team.chordax_pdf_creation.utils;
 
 import chordax_dev_team.chordax_pdf_creation.model.Line;
 import chordax_dev_team.chordax_pdf_creation.model.Song;
@@ -13,16 +13,12 @@ import java.io.IOException;
 
 public class PDFCreator {
 
-	private final Song song;
-	private final String filePath;
 	private static final float UNIT_CONVERTER = 2.834645669f; // 1mm ≈ 2.8346pt
 
-	public PDFCreator(Song song) {
-		this.song = song;
-		this.filePath = "src/main/resources/pdfs/" + sanitizeFileName(song.title()) + ".pdf";
-	}
+	public File createPdf(Song song) throws IOException, DocumentException {
 
-	public File createPdf() throws IOException, DocumentException {
+		String filePath = "src/main/resources/pdfs/" + sanitizeFileName(song.title()) + ".pdf";
+
 		File file = new File(filePath);
 
 		if (file.exists()) {
