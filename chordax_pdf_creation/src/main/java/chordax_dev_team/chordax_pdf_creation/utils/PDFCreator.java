@@ -6,24 +6,21 @@ import chordax_dev_team.chordax_pdf_creation.model.Tone;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import com.itextpdf.text.pdf.draw.LineSeparator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+@Component
 public class PDFCreator {
 
+	private static final Logger logger = LoggerFactory.getLogger(PDFCreator.class);
 	private static final float UNIT_CONVERTER = 2.834645669f; // 1mm ≈ 2.8346pt
 
-	public File createPdf(Song song) throws IOException, DocumentException {
-
-		String filePath = "src/main/resources/pdfs/" + sanitizeFileName(song.title()) + ".pdf";
-
-		File file = new File(filePath);
-
-		if (file.exists()) {
-			return file;
-		}
+	public byte[] createPdf(Song song) throws IOException, DocumentException {
+		logger.info("Starting PDF creation for song '{}'", song.title());
 
 		final int PAGE_WIDTH_MM = 210;
 		final int PAGE_HEIGHT_MM = 297;
@@ -35,7 +32,8 @@ public class PDFCreator {
 
 		Rectangle pageSize = new Rectangle(PAGE_WIDTH_MM * UNIT_CONVERTER, PAGE_HEIGHT_MM * UNIT_CONVERTER);
 		Document document = new Document(pageSize);
-		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(file));
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		PdfWriter writer = PdfWriter.getInstance(document, outputStream);
 		document.open();
 
 		LineSeparator separator = new LineSeparator(1.0f, 110.0f, BaseColor.BLACK, Element.ALIGN_CENTER, -17.0f * UNIT_CONVERTER);
@@ -48,6 +46,8 @@ public class PDFCreator {
 		BaseFont titleFont = loadFont("src/main/resources/static/fonts/Roboto-Black.ttf");
 		BaseFont bodyFont = loadFont("src/main/resources/static/fonts/Roboto-Bold.ttf");
 
+		logger.debug("Fonts loaded successfully");
+
 		// Title
 		cb.beginText();
 		cb.setFontAndSize(titleFont, 18);
@@ -55,11 +55,18 @@ public class PDFCreator {
 		cb.showText(song.title());
 		cb.endText();
 
-		// Metadata
+		// Metadata - Composer
 		cb.beginText();
 		cb.setFontAndSize(titleFont, 10);
 		cb.moveText(MARGIN_LEFT_MM * UNIT_CONVERTER, (PAGE_HEIGHT_MM - MARGIN_TOP_MM - 10) * UNIT_CONVERTER);
-		cb.showText("Composer: " + song.composer() + " | Author: " + song.author());
+		cb.showText("Composer: " + song.composer());
+		cb.endText();
+
+		// Metadata - Author (shifted down by 12pt)
+		cb.beginText();
+		cb.setFontAndSize(titleFont, 10);
+		cb.moveText(MARGIN_LEFT_MM * UNIT_CONVERTER, (PAGE_HEIGHT_MM - MARGIN_TOP_MM - 22) * UNIT_CONVERTER);
+		cb.showText("Author: " + song.author());
 		cb.endText();
 
 		// Body
@@ -89,32 +96,26 @@ public class PDFCreator {
 
 		try {
 			Image logo = Image.getInstance("src/main/resources/static/img/chordax.png");
-
-			// Resize if needed
-			logo.scaleAbsolute(200, 75); // width, height in points
-
-			// Position at bottom-left corner
-			logo.setAbsolutePosition(25 * UNIT_CONVERTER, 10 * UNIT_CONVERTER); // x, y in points
-
+			logo.scaleAbsolute(200, 75);
+			logo.setAbsolutePosition(25 * UNIT_CONVERTER, 10 * UNIT_CONVERTER);
 			cb.addImage(logo);
+			logger.debug("Logo image added to PDF");
 		} catch (Exception e) {
-			System.err.println("Failed to load footer image: " + e.getMessage());
+			logger.warn("Failed to load footer image: {}", e.getMessage());
 		}
 
 		cb.restoreState();
 		document.close();
 
-		return file;
-	}
-
-	private static String sanitizeFileName(String title) {
-		return title.replaceAll("[^a-zA-Z0-9\\-_\\. ]", "_");
+		logger.info("PDF creation completed for song '{}'", song.title());
+		return outputStream.toByteArray();
 	}
 
 	private static BaseFont loadFont(String path) throws IOException {
 		try {
 			return BaseFont.createFont(path, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 		} catch (Exception e) {
+			logger.error("Failed to load font from path '{}'", path, e);
 			throw new IOException("Failed to load font: " + path, e);
 		}
 	}
