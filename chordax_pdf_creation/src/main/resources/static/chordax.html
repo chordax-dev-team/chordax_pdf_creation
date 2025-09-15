@@ -13,7 +13,7 @@
       background: white;
       padding: 2rem;
       border-radius: 8px;
-      max-width: 500px;
+      max-width: 600px;
       margin: auto;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
@@ -52,143 +52,99 @@
     }
     textarea {
       width: calc(100% - 25px);
-      height: 150px;
+      height: 200px;
       resize: vertical;
-      font-size: .7rem;
+      font-size: .8rem;
     }
     .button-group {
       display: flex;
       gap: 1rem;
+      margin-top: 1rem;
+    }
+    #spinner {
+      display: none;
+      margin-top: 1rem;
+      text-align: center;
+    }
+    #spinner img {
+      width: 40px;
     }
   </style>
 </head>
 <body>
 <div class="container">
   <img src="./img/chordax.png" width="200" />
-  <div class="tabs">
-    <div class="tab active" onclick="switchTab('getSongs')">GET SONG</div>
-    <div class="tab" onclick="switchTab('postJson')">ENTER SONG</div>
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('getSongs')">GET SONG</div>
+  <div class="tab" onclick="switchTab('editSong')">EDIT SONG</div>
+  <div class="tab" onclick="switchTab('enterSong')">ENTER SONG</div>
+</div>
+
+
+<div id="getSongs" class="tab-content active">
+  <h2>MANAGE SONG</h2>
+  <label for="songId">SELECT SONG:</label>
+  <select id="songId" onchange="displaySongDetails()"></select>
+
+  <div class="button-group">
+    <button onclick="createPDF()">CREATE PDF</button>
+    <button onclick="previewPDF()">PREVIEW PDF</button>
+    <button onclick="deleteSong()">DELETE SONG</button>
   </div>
 
-  <div id="getSongs" class="tab-content active">
-    <h2>CREATE SONG PDF</h2>
-    <label for="songId">SELECT SONG:</label>
-    <select id="songId"></select>
-    <div class="button-group">
-      <button onclick="createPDF()">CREATE PDF</button>
-      <button onclick="previewPDF()">PREVIEW PDF</button>
-    </div>
+  <div id="spinner"><img src="./img/spinner.gif" alt="Loading..." /></div>
+
+  <h3>SONG DETAILS:</h3>
+  <pre id="songDetails" style="background:#f9f9f9; padding:1rem; border-radius:6px; font-size:0.85rem;"></pre>
+</div>
+
+
+<div id="editSong" class="tab-content">
+  <h2>EDIT SONG</h2>
+
+  <label for="userIdInput">USER ID:</label>
+  <input type="number" id="userIdInput" value="1" readonly />
+  <br/>
+  <label for="songIdInput">SONG ID:</label>
+  <input type="number" id="songIdInput" readonly />
+  <br/>
+  <br/>
+  <label for="jsonInput">EDIT SONG:</label>
+  <div id="textAreaWrapper">
+    <textarea id="jsonInput" placeholder='Edit song JSON here'></textarea>
   </div>
 
-  <div id="postJson" class="tab-content">
-    <h2>CREATE SONG PDF</h2>
-    <label for="jsonInput">ENTER SONG AS JSON:</label>
-    <div id="textAreaWrapper">
-        <textarea id="jsonInput" placeholder='{"title":"My Song","composer":"...","author":"...","lines":[...]}'>
-          {
-  "title": "Duchu Święty",
-  "composer": "Szymon Czyżewski, Melania Król, Dawid Leszczyński",
-  "author": "Szymon Czyżewski, Melania Król, Dawid Leszczyński",
-  "lines": [
-    {
-      "lineType": "VERSE",
-      "lyrics": "Nie ma nic ważniejszego, kiedy jesteś tu blisko",
-      "tones": [
-        { "chord": "D", "position": 0 },
-        { "chord": "A", "position": 315 }
-      ]
-    },
-    {
-      "lineType": "VERSE",
-      "lyrics": "Z Tobą nic się nie równa, jesteś żywą nadzieją",
-      "tones": [
-        { "chord": "D", "position": 315 }
-      ]
-    },
-    {
-      "lineType": "REFRAIN",
-      "lyrics": "Obecność Twa",
-      "tones": [
-        { "chord": "A", "position": 80 }
-      ]
-    },
-    {
-      "lineType": "VERSE",
-      "lyrics": "Spróbowałem i pragnę najsłodszej miłości",
-      "tones": [
-        { "chord": "D", "position": 0 },
-        { "chord": "A", "position": 300 }
-      ]
-    },
-    {
-      "lineType": "VERSE",
-      "lyrics": "Moje serce jest wolne od wstydu i hańby",
-      "tones": [
-        { "chord": "D", "position": 280 }
-      ]
-    },
-    {
-      "lineType": "REFRAIN",
-      "lyrics": "Obecność Twa",
-      "tones": [
-        { "chord": "A", "position": 80 }
-      ]
-    },
-    {
-      "lineType": "CHORUS",
-      "lyrics": "Duchu Święty, zapraszamy Cię",
-      "tones": [
-        { "chord": "D", "position": 0 }
-      ]
-    },
-    {
-      "lineType": "CHORUS",
-      "lyrics": "Obecność Twa, jak fala, zmienia miejsce te",
-      "tones": [
-        { "chord": "A", "position": 15 }
-      ]
-    },
-    {
-      "lineType": "CHORUS",
-      "lyrics": "Twoja chwała niech przenika serce me",
-      "tones": [
-        { "chord": "D", "position": 60 }
-      ]
-    },
-    {
-      "lineType": "CHORUS",
-      "lyrics": "Przejmij, Panie, wszystko, obecności chcemy Twej",
-      "tones": [
-        { "chord": "A", "position": 80 },
-        { "chord": "Em", "position": 120 },
-        { "chord": "D", "position": 280 },
-        { "chord": "A", "position": 300 }
-      ]
-    },
-    {
-      "lineType": "BRIDGE",
-      "lyrics": "Spraw, byśmy byli bardziej świadomi Twej obecności",
-      "tones": [
-        { "chord": "D", "position": 0 }
-      ]
-    },
-    {
-      "lineType": "BRIDGE",
-      "lyrics": "Daj nam doświadczyć dobroci Twojej chwały",
-      "tones": [
-        { "chord": "A", "position": 0 },
-        { "chord": "Em", "position": 220 }
-      ]
-    }
-  ]
-}
-        </textarea>
-    </div>
-    <div class="button-group">
-      <button onclick="postJson()">CREATE PDF</button>
-      <button onclick="previewJson()">PREVIEW PDF</button>
-    </div>
+  <div class="button-group">
+    <button onclick="submitJson()">SUBMIT</button>
+    <button onclick="previewJson()">PREVIEW PDF</button>
+    <button onclick="createPdfFromJson()">CREATE PDF</button>
   </div>
+
+  <div id="spinner"><img src="./img/spinner.gif" alt="Loading..." /></div>
+</div>
+
+<div id="enterSong" class="tab-content">
+  <h2>ENTER SONG</h2>
+
+  <label for="newUserIdInput">USER ID:</label>
+  <input type="number" id="newUserIdInput" value=1/>
+  <br/>
+  <br/>
+  <label for="newJsonInput">ENTER SONG:</label>
+  <div id="textAreaWrapper">
+    <textarea id="newJsonInput" placeholder='Paste new song JSON here'></textarea>
+  </div>
+
+  <div class="button-group">
+    <button onclick="submitNewSong()">SUBMIT</button>
+    <button onclick="previewNewJson()">PREVIEW PDF</button>
+    <button onclick="createPdfFromNewJson()">CREATE PDF</button>
+  </div>
+
+  <div id="spinner"><img src="./img/spinner.gif" alt="Loading..." /></div>
+</div>
+
+
 </div>
 
 <script>
@@ -199,8 +155,17 @@
     document.getElementById(tabId).classList.add('active');
   }
 
-  async function createPDF() {
+  function showSpinner() {
+    document.querySelectorAll('#spinner').forEach(spinner => spinner.style.display = 'block');
+  }
+
+  function hideSpinner() {
+    document.querySelectorAll('#spinner').forEach(spinner => spinner.style.display = 'none');
+  }
+
+  async function createPDF() { //++++++++++++++++++++++++++++++++++++++++++++++++
     const songId = document.getElementById("songId").value;
+    showSpinner();
     try {
       const response = await fetch(`http://localhost:8081/api/v1/pdfs/1/${songId}`);
       if (!response.ok) throw new Error("Failed to fetch PDF");
@@ -208,10 +173,12 @@
       downloadPdf(pdfDto);
     } catch (error) {
       alert("Error generating PDF: " + error.message);
+    } finally {
+      hideSpinner();
     }
   }
 
-  function previewPDF() {
+  function previewPDF() { //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     const songId = document.getElementById("songId").value;
     if (!songId) {
       alert("Please select a song first.");
@@ -221,42 +188,215 @@
     window.open(previewUrl, "_blank");
   }
 
-  async function postJson() {
-    const jsonInput = document.getElementById("jsonInput").value;
+  async function deleteSong() { //++++++++++++++++++++++++++++++++++++++++++++
+    const songId = document.getElementById("songId").value;
+    const userId = 1;
+    if (!songId) {
+      alert("Please select a song to delete.");
+      return;
+    }
+    const confirmed = confirm("Are you sure you want to delete this song?");
+    if (!confirmed) return;
+
+    showSpinner();
     try {
-      const payload = JSON.parse(jsonInput);
-      const response = await fetch("http://localhost:8081/api/v1/pdfs/1", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+      const response = await fetch(`http://localhost:8080/api/v1/songs/${userId}/${songId}`, {
+        method: "DELETE"
       });
-      if (!response.ok) throw new Error("Failed to fetch PDF");
-      const pdfDto = await response.json();
-      downloadPdf(pdfDto);
+      if (!response.ok) throw new Error("Failed to delete song");
+      alert("Song deleted successfully.");
+      fetchTitles();
     } catch (error) {
-      alert("Error generating PDF: " + error.message);
+      alert("Error deleting song: " + error.message);
+    } finally {
+      hideSpinner();
     }
   }
 
-  async function previewJson() {
-    const jsonInput = document.getElementById("jsonInput").value;
-    try {
-      const payload = JSON.parse(jsonInput);
-      const response = await fetch("http://localhost:8081/api/v1/pdfs/preview/1", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-      if (!response.ok) throw new Error("Failed to preview PDF");
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      window.open(url, "_blank");
-    } catch (error) {
-      alert("Error previewing PDF: " + error.message);
-    }
+  async function submitJson() {
+  const userId = document.getElementById("userIdInput").value;
+  const songId = document.getElementById("songIdInput").value;
+  const jsonInput = document.getElementById("jsonInput").value;
+
+  if (!jsonInput.trim()) {
+    alert("Please enter valid JSON.");
+    return;
   }
 
-  function downloadPdf(pdfDto) {
+  showSpinner();
+  try {
+    const payload = JSON.parse(jsonInput);
+    const endpoint = `http://localhost:8080/api/v1/songs/${userId}/${songId}`;
+
+    const response = await fetch(endpoint, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) throw new Error("Failed to update song");
+    alert("Song updated successfully.");
+    fetchTitles();
+  } catch (error) {
+    alert("Error updating song: " + error.message);
+  } finally {
+    hideSpinner();
+  }
+}
+
+async function previewJson() {
+  const jsonInput = document.getElementById("jsonInput").value;
+
+  if (!jsonInput.trim()) {
+    alert("Please enter valid JSON.");
+    return;
+  }
+
+  showSpinner();
+  try {
+    const payload = JSON.parse(jsonInput);
+    const response = await fetch("http://localhost:8081/api/v1/pdfs/preview", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) throw new Error("Failed to preview PDF");
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    window.open(url, "_blank");
+  } catch (error) {
+    alert("Error previewing PDF: " + error.message);
+  } finally {
+    hideSpinner();
+  }
+}
+
+async function createPdfFromJson() {
+  const jsonInput = document.getElementById("jsonInput").value;
+
+  if (!jsonInput.trim()) {
+    alert("Please enter valid JSON.");
+    return;
+  }
+
+  showSpinner();
+  try {
+    const payload = JSON.parse(jsonInput);
+    const response = await fetch("http://localhost:8081/api/v1/pdfs", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) throw new Error("Failed to create PDF");
+    const pdfDto = await response.json();
+    downloadPdf(pdfDto);
+  } catch (error) {
+    alert("Error creating PDF: " + error.message);
+  } finally {
+    hideSpinner();
+  }
+}
+
+async function submitNewSong() {
+  const userId = document.getElementById("newUserIdInput").value;
+  const jsonInput = document.getElementById("newJsonInput").value;
+
+  if (!jsonInput.trim()) {
+    alert("Please enter valid JSON.");
+    return;
+  }
+
+  showSpinner();
+  try {
+    const payload = JSON.parse(jsonInput);
+    const endpoint = `http://localhost:8080/api/v1/songs/${userId}`;
+
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const responseText = await response.text(); // Capture backend message
+
+    if (!response.ok) {
+      console.error("Backend error:", response.status, responseText);
+      throw new Error(`Server responded with ${response.status}: ${responseText}`);
+    }
+
+    alert("New song submitted successfully.");
+    fetchTitles();
+  } catch (error) {
+    console.error("Submission error:", error);
+    alert("Error submitting new song:\n" + error.message);
+  } finally {
+    hideSpinner();
+  }
+}
+
+
+
+async function previewNewJson() {
+  const jsonInput = document.getElementById("newJsonInput").value;
+
+  if (!jsonInput.trim()) {
+    alert("Please enter valid JSON.");
+    return;
+  }
+
+  showSpinner();
+  try {
+    const payload = JSON.parse(jsonInput);
+    const response = await fetch("http://localhost:8081/api/v1/pdfs/preview", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) throw new Error("Failed to preview PDF");
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    window.open(url, "_blank");
+  } catch (error) {
+    alert("Error previewing PDF: " + error.message);
+  } finally {
+    hideSpinner();
+  }
+}
+
+
+async function createPdfFromNewJson() {
+  const jsonInput = document.getElementById("newJsonInput").value;
+
+  if (!jsonInput.trim()) {
+    alert("Please enter valid JSON.");
+    return;
+  }
+
+  showSpinner();
+  try {
+    const payload = JSON.parse(jsonInput);
+    const response = await fetch("http://localhost:8081/api/v1/pdfs", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) throw new Error("Failed to create PDF");
+    const pdfDto = await response.json();
+    downloadPdf(pdfDto);
+  } catch (error) {
+    alert("Error creating PDF: " + error.message);
+  } finally {
+    hideSpinner();
+  }
+}
+
+
+
+function downloadPdf(pdfDto) {
     if (!pdfDto.data || !pdfDto.title) throw new Error("Invalid PDF data received");
     const byteCharacters = atob(pdfDto.data);
     const byteNumbers = Array.from(byteCharacters, c => c.charCodeAt(0));
@@ -273,24 +413,87 @@
     window.URL.revokeObjectURL(url);
   }
 
-  async function fetchTitles() {
-    const songSelection = document.getElementById("songId");
-    try {
-      const response = await fetch("http://localhost:8080/api/v1/titles/1");
-      if (!response.ok) throw new Error("Problem with finding titles");
-      const titles = await response.json();
-      if (!Array.isArray(titles) || titles.length === 0) throw new Error("List of songs is empty");
+async function fetchTitles() {
+  const songSelection = document.getElementById("songId");
+  const songDetails = document.getElementById("songDetails");
+  const jsonInput = document.getElementById("jsonInput");
+  const songIdInput = document.getElementById("songIdInput");
+  const userId = 1;
 
-      titles.forEach(title => {
-        const option = document.createElement("option");
-        option.value = title.songId;
-        option.textContent = title.songTitle;
-        songSelection.appendChild(option);
-      });
-    } catch (error) {
-      console.error("Error loading song titles:", error.message);
-    }
+  songSelection.innerHTML = ""; // Clear existing options
+
+  try {
+    const response = await fetch(`http://localhost:8080/api/v1/titles/${userId}`);
+    if (!response.ok) throw new Error("Problem with finding titles");
+
+    const titles = await response.json();
+    if (!Array.isArray(titles) || titles.length === 0) throw new Error("List of songs is empty");
+
+    // Populate dropdown
+    titles.forEach(title => {
+      const option = document.createElement("option");
+      option.value = title.songId;
+      option.textContent = title.songTitle;
+      songSelection.appendChild(option);
+    });
+
+    // Auto-select first song
+    const firstSongId = titles[0].songId;
+    songSelection.value = firstSongId;
+
+    // Fetch and display full song details
+    const songResponse = await fetch(`http://localhost:8080/api/v1/songs/${userId}/${firstSongId}`);
+    if (!songResponse.ok) throw new Error("Failed to fetch song details");
+
+    const song = await songResponse.json();
+    const formattedJson = JSON.stringify(song, null, 2);
+
+    songDetails.textContent = formattedJson;
+    jsonInput.value = formattedJson;
+    songIdInput.value = firstSongId;
+
+  } catch (error) {
+    console.error("Error loading song titles:", error.message);
+    songDetails.textContent = "Error loading song titles.";
+    jsonInput.value = "";
+    songIdInput.value = "";
   }
+}
+
+async function displaySongDetails() {
+  const songId = document.getElementById("songId").value;
+  const userId = 1;
+  const songDetails = document.getElementById("songDetails");
+  const jsonInput = document.getElementById("jsonInput");
+  const songIdInput = document.getElementById("songIdInput");
+
+  if (!songId) {
+    songDetails.textContent = "No song selected.";
+    jsonInput.value = "";
+    songIdInput.value = "";
+    return;
+  }
+
+  showSpinner();
+  try {
+    const response = await fetch(`http://localhost:8080/api/v1/songs/${userId}/${songId}`);
+    if (!response.ok) throw new Error("Failed to fetch song details");
+
+    const song = await response.json();
+    const formattedJson = JSON.stringify(song, null, 2);
+
+    songDetails.textContent = formattedJson;
+    jsonInput.value = formattedJson; // ✅ Fill textarea with song JSON
+    songIdInput.value = songId;      // ✅ Sync song ID input
+  } catch (error) {
+    songDetails.textContent = "Error loading song details: " + error.message;
+    jsonInput.value = "";
+    songIdInput.value = "";
+  } finally {
+    hideSpinner();
+  }
+}
+
 
   window.onload = fetchTitles;
 </script>
