@@ -96,7 +96,7 @@ public class PDFCreator {
 
 		try {
 			Image logo = Image.getInstance("src/main/resources/static/img/chordax.png");
-			logo.scaleAbsolute(200, 75);
+			logo.scaleAbsolute(123, 39);
 			logo.setAbsolutePosition(25 * UNIT_CONVERTER, 10 * UNIT_CONVERTER);
 			cb.addImage(logo);
 			logger.debug("Logo image added to PDF");
