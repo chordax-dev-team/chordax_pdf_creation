@@ -14,7 +14,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>chordax_pdf_creation</name>
 	<description>generator of PDF from a selected song</description>
-	<url />
 	<properties>
 		<java.version>17</java.version>
 		<spring.boot.version>3.5.5</spring.boot.version>

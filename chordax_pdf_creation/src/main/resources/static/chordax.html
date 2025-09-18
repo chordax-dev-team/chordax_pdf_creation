@@ -74,86 +74,85 @@
 <body>
 <div class="container">
   <img src="./img/chordax.png" width="200" />
-<div class="tabs">
-  <div class="tab active" onclick="switchTab('getSongs')">GET SONG</div>
-  <div class="tab" onclick="switchTab('editSong')">EDIT SONG</div>
-  <div class="tab" onclick="switchTab('enterSong')">ENTER SONG</div>
-</div>
-
-
-<div id="getSongs" class="tab-content active">
-  <h2>MANAGE SONG</h2>
-  <label for="songId">SELECT SONG:</label>
-  <select id="songId" onchange="displaySongDetails()"></select>
-
-  <div class="button-group">
-    <button onclick="createPDF()">CREATE PDF</button>
-    <button onclick="previewPDF()">PREVIEW PDF</button>
-    <button onclick="deleteSong()">DELETE SONG</button>
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('getSongs')">GET SONG</div>
+    <div class="tab" onclick="switchTab('editSong')">EDIT SONG</div>
+    <div class="tab" onclick="switchTab('enterSong')">ENTER SONG</div>
   </div>
 
-  <div id="spinner"><img src="./img/spinner.gif" alt="Loading..." /></div>
+  <div id="getSongs" class="tab-content active">
+    <h2>MANAGE SONG</h2>
+    <label for="songId">SELECT SONG:</label>
+    <select id="songId" onchange="displaySongDetails()"></select>
 
-  <h3>SONG DETAILS:</h3>
-  <pre id="songDetails" style="background:#f9f9f9; padding:1rem; border-radius:6px; font-size:0.85rem;"></pre>
-</div>
+    <div class="button-group">
+      <button onclick="createPDF()">CREATE PDF</button>
+      <button onclick="previewPDF()">PREVIEW PDF</button>
+      <button onclick="deleteSong()">DELETE SONG</button>
+      <button onclick="sendEmail()">SEND EMAIL</button>
+    </div>
 
+    <div id="spinner"><img src="./img/spinner.gif" alt="Loading..." /></div>
 
-<div id="editSong" class="tab-content">
-  <h2>EDIT SONG</h2>
-
-  <label for="userIdInput">USER ID:</label>
-  <input type="number" id="userIdInput" value="1" readonly />
-  <br/>
-  <label for="songIdInput">SONG ID:</label>
-  <input type="number" id="songIdInput" readonly />
-  <br/>
-  <br/>
-  <label for="jsonInput">EDIT SONG:</label>
-  <div id="textAreaWrapper">
-    <textarea id="jsonInput" placeholder='Edit song JSON here'></textarea>
+    <h3>SONG DETAILS:</h3>
+    <pre id="songDetails" style="background:#f9f9f9; padding:1rem; border-radius:6px; font-size:0.85rem;"></pre>
   </div>
 
-  <div class="button-group">
-    <button onclick="submitJson()">SUBMIT</button>
-    <button onclick="previewJson()">PREVIEW PDF</button>
-    <button onclick="createPdfFromJson()">CREATE PDF</button>
+  <div id="editSong" class="tab-content">
+    <h2>EDIT SONG</h2>
+
+    <label for="userIdInput">USER ID:</label>
+    <input type="number" id="userIdInput" value="1" readonly />
+    <br/>
+    <label for="songIdInput">SONG ID:</label>
+    <input type="number" id="songIdInput" readonly />
+    <br/>
+    <br/>
+    <label for="jsonInput">EDIT SONG:</label>
+    <div id="textAreaWrapper">
+      <textarea id="jsonInput" placeholder='Edit song JSON here'></textarea>
+    </div>
+
+    <div class="button-group">
+      <button onclick="submitJson()">SUBMIT</button>
+      <button onclick="previewJson()">PREVIEW PDF</button>
+      <button onclick="createPdfFromJson()">CREATE PDF</button>
+    </div>
+
+    <div id="spinner"><img src="./img/spinner.gif" alt="Loading..." /></div>
   </div>
 
-  <div id="spinner"><img src="./img/spinner.gif" alt="Loading..." /></div>
-</div>
+  <div id="enterSong" class="tab-content">
+    <h2>ENTER SONG</h2>
 
-<div id="enterSong" class="tab-content">
-  <h2>ENTER SONG</h2>
+    <label for="newUserIdInput">USER ID:</label>
+    <input type="number" id="newUserIdInput" value=1/>
+    <br/>
+    <br/>
+    <label for="newJsonInput">ENTER SONG:</label>
+    <div id="textAreaWrapper">
+      <textarea id="newJsonInput" placeholder='Paste new song JSON here'></textarea>
+    </div>
 
-  <label for="newUserIdInput">USER ID:</label>
-  <input type="number" id="newUserIdInput" value=1/>
-  <br/>
-  <br/>
-  <label for="newJsonInput">ENTER SONG:</label>
-  <div id="textAreaWrapper">
-    <textarea id="newJsonInput" placeholder='Paste new song JSON here'></textarea>
+    <div class="button-group">
+      <button onclick="submitNewSong()">SUBMIT</button>
+      <button onclick="previewNewJson()">PREVIEW PDF</button>
+      <button onclick="createPdfFromNewJson()">CREATE PDF</button>
+    </div>
+
+    <div id="spinner"><img src="./img/spinner.gif" alt="Loading..." /></div>
   </div>
-
-  <div class="button-group">
-    <button onclick="submitNewSong()">SUBMIT</button>
-    <button onclick="previewNewJson()">PREVIEW PDF</button>
-    <button onclick="createPdfFromNewJson()">CREATE PDF</button>
-  </div>
-
-  <div id="spinner"><img src="./img/spinner.gif" alt="Loading..." /></div>
-</div>
-
-
 </div>
 
 <script>
+
   function switchTab(tabId) {
     document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
     document.querySelector(`.tab[onclick*="${tabId}"]`).classList.add('active');
     document.getElementById(tabId).classList.add('active');
   }
+
 
   function showSpinner() {
     document.querySelectorAll('#spinner').forEach(spinner => spinner.style.display = 'block');
@@ -162,6 +161,7 @@
   function hideSpinner() {
     document.querySelectorAll('#spinner').forEach(spinner => spinner.style.display = 'none');
   }
+
 
   async function createPDF() { //++++++++++++++++++++++++++++++++++++++++++++++++
     const songId = document.getElementById("songId").value;
@@ -178,6 +178,7 @@
     }
   }
 
+
   function previewPDF() { //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     const songId = document.getElementById("songId").value;
     if (!songId) {
@@ -187,6 +188,7 @@
     const previewUrl = `http://localhost:8081/api/v1/pdfs/preview/1/${songId}`;
     window.open(previewUrl, "_blank");
   }
+
 
   async function deleteSong() { //++++++++++++++++++++++++++++++++++++++++++++
     const songId = document.getElementById("songId").value;
@@ -212,6 +214,7 @@
       hideSpinner();
     }
   }
+
 
   async function submitJson() {
   const userId = document.getElementById("userIdInput").value;
@@ -244,6 +247,7 @@
   }
 }
 
+
 async function previewJson() {
   const jsonInput = document.getElementById("jsonInput").value;
 
@@ -272,6 +276,7 @@ async function previewJson() {
   }
 }
 
+
 async function createPdfFromJson() {
   const jsonInput = document.getElementById("jsonInput").value;
 
@@ -298,6 +303,7 @@ async function createPdfFromJson() {
     hideSpinner();
   }
 }
+
 
 async function submitNewSong() {
   const userId = document.getElementById("newUserIdInput").value;
@@ -335,7 +341,6 @@ async function submitNewSong() {
     hideSpinner();
   }
 }
-
 
 
 async function previewNewJson() {
@@ -395,7 +400,6 @@ async function createPdfFromNewJson() {
 }
 
 
-
 function downloadPdf(pdfDto) {
     if (!pdfDto.data || !pdfDto.title) throw new Error("Invalid PDF data received");
     const byteCharacters = atob(pdfDto.data);
@@ -412,6 +416,30 @@ function downloadPdf(pdfDto) {
     a.remove();
     window.URL.revokeObjectURL(url);
   }
+
+
+  function sendEmail() {
+  const userId = 1; // or dynamically fetch if needed
+  const songId = document.getElementById("songId").value;
+  if (!songId) {
+    alert("Please select a song first.");
+    return;
+  }
+
+  fetch(`http://localhost:8082/api/v1/email/html-with-attachment/${userId}/${songId}`)
+    .then(response => {
+      if (!response.ok) throw new Error("Failed to send email");
+      return response.text();
+    })
+    .then(data => {
+      alert("Email sent successfully!");
+    })
+    .catch(error => {
+      console.error("Error:", error);
+      alert("Error sending email.");
+    });
+}
+
 
 async function fetchTitles() {
   const songSelection = document.getElementById("songId");
@@ -495,7 +523,7 @@ async function displaySongDetails() {
 }
 
 
-  window.onload = fetchTitles;
+window.onload = fetchTitles;
 </script>
 </body>
 </html>
