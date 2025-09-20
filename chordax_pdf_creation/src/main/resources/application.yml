@@ -1,9 +1,14 @@
-spring.application.name: chordax_pdf_creation
+spring:
+  application.name: chordax_pdf_creation
+
+########################### CONFIG ############################################
+  config.import: optional:configserver:http://localhost:8888
+  cloud.config.uri: http://localhost:8888
+
+########################### EUREKA - SERVICE DISCOVERY #######################
+eureka:
+  client.serviceUrl.defaultZone:
+  instance.preferIpAddress:
 
 ########################### PORT ############################################
-server.port: 8081
-
-########################### EUREKA ############################################
-eureka:
-  client.serviceUrl.defaultZone: http://localhost:8765/eureka
-  instance.preferIpAddress: true
+server.port:
