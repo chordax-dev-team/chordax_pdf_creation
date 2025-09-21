@@ -29,7 +29,7 @@ public class PDFCreator {
 		final int MARGIN_TOP_MM = 25;
 		final int MARGIN_BOTTOM_MM = 25;
 		final int LINE_HEIGHT_PT = 15;
-		final int CHORDS_LINE_HEIGHT_PT = 6;
+		final int CHORDS_LINE_HEIGHT_PT = 5;
 
 		Rectangle pageSize = new Rectangle(PAGE_WIDTH_MM * UNIT_CONVERTER, PAGE_HEIGHT_MM * UNIT_CONVERTER);
 		Document document = new Document(pageSize);
@@ -64,17 +64,35 @@ public class PDFCreator {
 		caretY -= 15 * UNIT_CONVERTER;
 		cb.setColorFill(BaseColor.BLACK);
 		cb.beginText();
-		cb.setFontAndSize(titleFont, 10);
 		cb.moveText(CARET_X, caretY);
-		cb.showText("Composer: " + song.composer());
+		cb.setFontAndSize(titleFont, 8);
+		cb.showText("COMPOSER");
+		cb.endText();
+		cb.beginText();
+		cb.moveText(CARET_X + 50, caretY);
+		cb.showText("|");
+		cb.endText();
+		cb.beginText();
+		cb.moveText(CARET_X + 60, caretY);
+		cb.setFontAndSize(titleFont, 10);
+		cb.showText(song.composer());
 		cb.endText();
 
 		// Metadata - Author (shifted down by 12pt)
 		caretY -= 5 * UNIT_CONVERTER;
 		cb.beginText();
-		cb.setFontAndSize(titleFont, 10);
 		cb.moveText(CARET_X, caretY);
-		cb.showText("Author: " + song.author());
+		cb.setFontAndSize(titleFont, 8);
+		cb.showText("AUTHOR");
+		cb.endText();
+		cb.beginText();
+		cb.moveText(CARET_X + 50, caretY);
+		cb.showText("|");
+		cb.endText();
+		cb.beginText();
+		cb.moveText(CARET_X + 60, caretY);
+		cb.setFontAndSize(titleFont, 10);
+		cb.showText(song.author());
 		cb.endText();
 
 		// Body
@@ -83,7 +101,7 @@ public class PDFCreator {
 			caretY -= LINE_HEIGHT_PT * UNIT_CONVERTER;
 			for (Tone tone : line.tones()) {
 				cb.beginText();
-				cb.moveText((CARET_X + tone.position()), caretY);
+				cb.moveText(CARET_X + tone.position(), caretY);
 				cb.showText(tone.chord());
 				cb.endText();
 			}
@@ -93,14 +111,27 @@ public class PDFCreator {
 			cb.endText();
 		}
 
-		// Bottom separator
+		float llx = CARET_X;
+		final float LLY = MARGIN_BOTTOM_MM * UNIT_CONVERTER - 20;
+		float urx = llx + 6;
+		final float URY = LLY + 6;
 
+		Rectangle rect = new Rectangle(llx, LLY, urx, URY);
+		rect.setBorder(Rectangle.BOX);
+		rect.setBorderWidth(0.25f);
+		rect.setBorderColor(BaseColor.BLACK);
+		rect.setBackgroundColor(BaseColor.BLACK);
+		document.add(rect);
+
+
+		final int IMAGE_WIDTH = 90;
+		final int IMAGE_HEIGHT = 30;
+		final float IMAGE_POSITION_X = (PAGE_WIDTH_MM - MARGIN_LEFT_MM) * UNIT_CONVERTER - IMAGE_WIDTH;
+		final float IMAGE_POSITION_Y = (MARGIN_BOTTOM_MM * UNIT_CONVERTER) - IMAGE_HEIGHT;
 		try {
 			Image logo = Image.getInstance("src/main/resources/static/img/chordax.png");
-			final int IMAGE_WIDTH = 123;
-			final int IMAGE_HEIGHT = 39;
 			logo.scaleAbsolute(IMAGE_WIDTH, IMAGE_HEIGHT);
-			logo.setAbsolutePosition((PAGE_WIDTH_MM * UNIT_CONVERTER - IMAGE_WIDTH) / 2, (MARGIN_BOTTOM_MM * UNIT_CONVERTER) - IMAGE_HEIGHT);
+			logo.setAbsolutePosition(IMAGE_POSITION_X, IMAGE_POSITION_Y);
 			cb.addImage(logo);
 			logger.debug("Logo image added to PDF");
 		} catch (Exception e) {
