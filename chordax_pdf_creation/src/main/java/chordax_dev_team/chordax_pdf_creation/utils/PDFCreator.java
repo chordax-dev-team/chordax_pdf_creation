@@ -17,10 +17,11 @@ import java.io.IOException;
 public class PDFCreator {
 
 	private static final Logger logger = LoggerFactory.getLogger(PDFCreator.class);
-	private static final float UNIT_CONVERTER = 2.834645669f; // 1mm ≈ 2.8346pt
 
 	public byte[] createPdf(Song song) throws IOException, DocumentException {
 		logger.info("Starting PDF creation for song '{}'", song.title());
+
+		final float UNIT_CONVERTER = 2.834645669f; // 1mm ≈ 2.8346pt
 
 		final int PAGE_WIDTH_MM = 210;
 		final int PAGE_HEIGHT_MM = 297;
@@ -48,56 +49,58 @@ public class PDFCreator {
 
 		logger.debug("Fonts loaded successfully");
 
+		final float CARET_X = MARGIN_LEFT_MM * UNIT_CONVERTER;
+		float caretY = (PAGE_HEIGHT_MM - MARGIN_TOP_MM) * UNIT_CONVERTER;
 		// Title
+		cb.setRGBColorFill(190, 15, 15);
 		cb.beginText();
-		cb.setFontAndSize(titleFont, 18);
-		cb.moveText(MARGIN_LEFT_MM * UNIT_CONVERTER, (PAGE_HEIGHT_MM - MARGIN_TOP_MM) * UNIT_CONVERTER);
+		cb.setFontAndSize(titleFont, 24);
+
+		cb.moveText(CARET_X, caretY);
 		cb.showText(song.title());
 		cb.endText();
 
 		// Metadata - Composer
+		caretY -= 15 * UNIT_CONVERTER;
+		cb.setColorFill(BaseColor.BLACK);
 		cb.beginText();
 		cb.setFontAndSize(titleFont, 10);
-		cb.moveText(MARGIN_LEFT_MM * UNIT_CONVERTER, (PAGE_HEIGHT_MM - MARGIN_TOP_MM - 10) * UNIT_CONVERTER);
+		cb.moveText(CARET_X, caretY);
 		cb.showText("Composer: " + song.composer());
 		cb.endText();
 
 		// Metadata - Author (shifted down by 12pt)
+		caretY -= 5 * UNIT_CONVERTER;
 		cb.beginText();
 		cb.setFontAndSize(titleFont, 10);
-		cb.moveText(MARGIN_LEFT_MM * UNIT_CONVERTER, (PAGE_HEIGHT_MM - MARGIN_TOP_MM - 22) * UNIT_CONVERTER);
+		cb.moveText(CARET_X, caretY);
 		cb.showText("Author: " + song.author());
 		cb.endText();
 
 		// Body
 		cb.setFontAndSize(titleFont, 12);
-		int verseY = 260;
 		for (Line line : song.lines()) {
+			caretY -= LINE_HEIGHT_PT * UNIT_CONVERTER;
 			for (Tone tone : line.tones()) {
 				cb.beginText();
-				cb.moveText((MARGIN_LEFT_MM + tone.position()) * UNIT_CONVERTER, verseY * UNIT_CONVERTER);
+				cb.moveText((CARET_X + tone.position()), caretY);
 				cb.showText(tone.chord());
 				cb.endText();
 			}
 			cb.beginText();
-			cb.moveText(MARGIN_LEFT_MM * UNIT_CONVERTER, (verseY - CHORDS_LINE_HEIGHT_PT) * UNIT_CONVERTER);
+			cb.moveText(CARET_X, caretY - CHORDS_LINE_HEIGHT_PT * UNIT_CONVERTER);
 			cb.showText(line.lyrics());
 			cb.endText();
-			verseY -= LINE_HEIGHT_PT;
 		}
 
-		// Signature
-		cb.beginText();
-		cb.setFontAndSize(bodyFont, 13);
-		cb.moveText((PAGE_WIDTH_MM - MARGIN_LEFT_MM - titleFont.getWidthPoint("Chordax", 13)) * UNIT_CONVERTER,
-				MARGIN_BOTTOM_MM * UNIT_CONVERTER);
-		cb.showText("Chordax");
-		cb.endText();
+		// Bottom separator
 
 		try {
 			Image logo = Image.getInstance("src/main/resources/static/img/chordax.png");
-			logo.scaleAbsolute(123, 39);
-			logo.setAbsolutePosition(25 * UNIT_CONVERTER, 10 * UNIT_CONVERTER);
+			final int IMAGE_WIDTH = 123;
+			final int IMAGE_HEIGHT = 39;
+			logo.scaleAbsolute(IMAGE_WIDTH, IMAGE_HEIGHT);
+			logo.setAbsolutePosition((PAGE_WIDTH_MM * UNIT_CONVERTER - IMAGE_WIDTH) / 2, (MARGIN_BOTTOM_MM * UNIT_CONVERTER) - IMAGE_HEIGHT);
 			cb.addImage(logo);
 			logger.debug("Logo image added to PDF");
 		} catch (Exception e) {
