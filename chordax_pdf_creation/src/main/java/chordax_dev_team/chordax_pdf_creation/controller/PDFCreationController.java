@@ -11,6 +11,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping("/api/v1/pdfs")
@@ -58,7 +59,7 @@ public class PDFCreationController {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_PDF);
-		headers.setContentDisposition(ContentDisposition.inline().filename(song.title() + ".pdf").build());
+		headers.setContentDisposition(ContentDisposition.inline().filename(song.title() + ".pdf", StandardCharsets.UTF_8).build());
 
 		return new ResponseEntity<>(data, headers, HttpStatus.OK);
 	}
